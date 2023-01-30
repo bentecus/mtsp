@@ -10,22 +10,13 @@ from pathcost_calculation.msg import PathCost
 from pathcost_calculation.msg import DrivePlan
 
 class MTSP():
-    def __init__(self, numCities, numTSP, seed):
-        self.numCities = numCities
-        self.numTSP = numTSP
+    def __init__(self, cityCoordinates, tspCoordinates, seed=12345):
+        self.cityCoordinates = cityCoordinates
+        self.numCities = len(cityCoordinates)
+        self.tspCoordinates = tspCoordinates
+        self.numTSP = len(tspCoordinates)
         self.rng = np.random.default_rng(seed)
-
-        #self.sub = rospy.Subscriber("/PathCostsTag", PathCosts, self.waitForRobot1Costs)
-        #rospy.spin()
-        rospy.loginfo("Waiting for tag costs.")
-        data = rospy.wait_for_message("/PathCostsTag", PathCosts)
-        self.tagDistances = data.costs
-        rospy.loginfo("Received tag costs. Waiting for robot 1 costs.")
-        data = rospy.wait_for_message("/PathCostsRobot", PathCosts)
-        self.robotDistances = data.costs
-        rospy.loginfo("Received robot 1 costs. Waiting for robot 2 costs.")
-        data = rospy.wait_for_message("/PathCostsRobot", PathCosts)
-        rospy.loginfo("Received robot 2 costs.")     
+   
         self.distances = {}
         for pc in data.costs:
             self.distances[pc.id] = pc.cost
@@ -36,7 +27,7 @@ class MTSP():
         
 
     def optimize(self, pop, num_iter, pm, numOffsprings=2):
-        rospy.loginfo("Solving MTSP.")
+        print("Solving MTSP.")
         self.popSize = len(pop)
         self.num_iter = num_iter
         self.pm = pm
