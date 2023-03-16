@@ -1,3 +1,7 @@
 # commitizen
 .cz.yaml
 .pre-commit-config.yaml
+
+#cache
+.pytest_cache
+__pycache__
