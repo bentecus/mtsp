@@ -1,4 +1,8 @@
 import numpy as np
+import sys
+import os
+
+sys.path.append(os.getcwd())
 
 
 def euclidean(vecA: np.ndarray, vecB: np.ndarray) -> float:
@@ -9,14 +13,16 @@ def euclidean(vecA: np.ndarray, vecB: np.ndarray) -> float:
         vecA (np.ndarray): Vector A.
         vecB (np.ndarray): Vector B.
 
-    Returns: 
+    Returns:
         float: Euclidean distance between vector A and B.
 
     Raises:
         ValueError: Incompatible vector shapes.
     """
     if 1 not in vecA.shape or 1 not in vecB.shape:
-        raise ValueError("Vectors must be one-dimensional arrays.\n" + \
-                         "Received shapes: {} and {}".format(vecA, vecB))
+        raise ValueError(
+            "Vectors must be one-dimensional arrays.\n"
+            + "Received shapes: {} and {}".format(vecA, vecB)
+        )
     else:
         return np.linalg.norm(np.subtract(vecA, vecB))
